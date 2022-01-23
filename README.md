@@ -17,12 +17,15 @@ var serviceAccount = require("../your_authentification_key.json");
 3. Run the prompt command
 
 $ npm init
+
 $ npm install express cors firebase-admin --save
+
 $ npm install -g nodemon
 
 4. Run the server
 
 $ nodemon server
+
 The app will start running at http://localhost:8080
 
 Explore Rest APIs

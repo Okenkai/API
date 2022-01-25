@@ -32,74 +32,88 @@ The app will start running at http://localhost:8080
 
 The app defines following CRUD APIs.
 
+For the jwt authentication, i've create a user in hard
+
+For the login:
+
+(POST)login -> /api/login/
+{
+  "email": "johndoe@gmail.com",
+  "password": "koala"
+}
+
+A Token appear, you can copy this and past it in the header = Auth -> Bearer
+
+Now you can try the authorization with the URL /api/me/ with the method GET
+
 
 Sample Valid JSON Request Bodys
 
-create ship -> /regate/api/v1/ship/
+(POST)create ship -> /regate/api/v1/ship/
 {
 	"name": "blackpearl",
   "skipper": "Jack Sparrow"
 }
 
-create tracker -> /regate/api/v1/tracker/
+(POST)create tracker -> /regate/api/v1/tracker/
 {
 	"name": "iphone10",
 	"tracker_uuid": "198FS81389FYS"
 }
 
-Create pairing -> /regate/api/v1/pairing/
+(POST)Create pairing -> /regate/api/v1/pairing/
 {
   "tracker_id": "your_tracker_id",
 	"ship_id": "your_ship_id"
 }
 
-Create event -> /regate/api/v1/event/
+(POST)Create event -> /regate/api/v1/event/
 {
   "name": "transate jacqueVabre"
 }
 
-Create category -> /regate/api/v1/category/
+(POST)Create category -> /regate/api/v1/category/
 {
   "name": "IRC"
   "event_id": "your_event_id"
 }
 
-Create race -> /regate/api/v1/race/
+(POST)Create race -> /regate/api/v1/race/
 {
   "name": "Course 1"
   "category_id": "your_category_id"
 }
 
-update ship -> /regate/api/v1/ship/:id
+(PATCH)update ship -> /regate/api/v1/ship/:id
 {
 	"name": "blackpearl",
   "skipper": "Jack Sparrow"
 }
 
-update tracker -> /regate/api/v1/tracker/:id
+(PATCH)update tracker -> /regate/api/v1/tracker/:id
 {
 	"name": "iphone10",
 	"tracker_uuid": "198FS81389FYS"
 }
 
-update pairing -> /regate/api/v1/pairing/:id
+(PATCH)update pairing -> /regate/api/v1/pairing/:id
 {
   "tracker_id": "your_tracker_id",
 	"ship_id": "your_ship_id"
 }
 
-update event -> /regate/api/v1/event/:id
+(PATCH)update event -> /regate/api/v1/event/:id
 {
   "name": "transate jacqueVabre"
 }
 
-update category -> /regate/api/v1/category/:id
+(PATCH)update category -> /regate/api/v1/category/:id
 {
   "name": "IRC"
   "event_id": "your_event_id"
 }
 
-update race -> /regate/api/v1/race/:id
+(PATCH)update race -> /regate/api/v1/race/:id
 {
   "name": "Course 1"
   "category_id": "your_category_id"

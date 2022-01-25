@@ -1,5 +1,6 @@
 module.exports = app => {
-    const ship = require("./ship.controller")
+    const ship = require("./ship.controller");
+    const serve = require("../server");
     var router = require("express").Router();
 
     // -- ship 

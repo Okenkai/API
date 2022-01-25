@@ -1,0 +1,4 @@
+node_modules/
+.authentification
+.package-lock
+.package

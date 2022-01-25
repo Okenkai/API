@@ -1,7 +1,14 @@
-const express = require("express")
-const cors = require('cors')
-const db = require('./config/db')
-const app = express()
+const express = require("express");
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const db = require('./config/db');
+require('dotenv').config();
+
+const app = express();
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 var corsOptions = {
 
@@ -9,33 +16,57 @@ var corsOptions = {
 
 }
 
-app.use(cors(corsOptions));
+const user ={
+    id: 1,
+    name: 'john doe',
+    email: 'johndoe@gmail.com'
+}
 
-app.use(express.json());
+function generateAccessToken(user)
+{
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1800s'});
+}
 
-app.use(express.urlencoded({ extended: true }));
+function authenticateToken(req, res, next)
+{
+    const authHeader = res.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
 
-
-
-app.get("/:id", (req, res) => {
-
-    if ( req.params.id.length == 0 ) {
-        res.status(400).send({"error": "L'id est requis"})
+    if (!token)
+    {
+        return res.sendStatus(401)
     }
 
-    db.collection("boc-users").add({
-        "name": "Pierre",
-        "age": 22,
-        "gender":" male",
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err){
+            return res.sendStatus(401)
+        }
+        req.user = user;
+        next();
+    })
+}
 
-    }).then(function(docRef) {
-        console.log("User added with success "+docRef.id)
-    });
+app.get('/api/me', authenticateToken, (req, res) => {
+    res.send(req.user);
+})
+
+
+app.post("/api/login", (req, res) => {
+
+    if ( req.body.email !== user.email ) {
+        res.status(401).send({"error": "invalid credentials"})
+        return
+    }
+    if ( req.body.password !== 'koala' ) {
+        res.status(401).send({"error": "invalid credentials"})
+        return
+    }
+
+    const accessToken = generateAccessToken(user);
     res.send({
-
-        "message":"Bonjour tout le monde !",
-        "auteur": req.params.id
+        accessToken
     });
+    
 });
 
 //require(".app/routes/tutorial.routes")(app);
